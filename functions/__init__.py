@@ -1,0 +1,1 @@
+from .loader import load_graph_1, load_graph_2
