@@ -22,12 +22,11 @@ nodes['node'] = nodes['node'].apply(lambda row: row[:20])
 
 # Remove row with same hero (self-loop).
 hero_network.drop(hero_network[hero_network.hero1 == hero_network.hero2].index, inplace=True)
-hero_net = hero_network.reset_index(drop=True)
+hero_network.reset_index(drop=True, inplace=True)
 
 
 
 def first_graph(dataset):
-
     # Remake the dataframe sorting the names by row to check duplicates.
     dataset = pd.DataFrame(np.sort(dataset.values), columns=dataset.columns)
 
@@ -53,5 +52,19 @@ def second_graph(nodes, edges):
     graph.add_nodes_from(node_attr)
     return graph
 
+def top_N_heroes(N=-1):
+    top_heroes = edges.groupby('hero').count().sort_values('comic', ascending=False)
+    return list(top_heroes.iloc[:N].index)
+
+def not_top_N_heroes(N=-1):
+    top_heroes = edges.groupby('hero').count().sort_values('comic', ascending=False)
+    return list(top_heroes.iloc[N:].index)
+
+# Exported--------------------------
 load_graph_1 = lambda: first_graph(hero_network)
+
 load_graph_2 = lambda: second_graph(nodes, edges)
+
+def top_N_filter(graph, N=-1):
+    graph.remove_nodes_from(not_top_N_heroes(N))
+    return graph
