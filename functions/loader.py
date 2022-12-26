@@ -14,6 +14,7 @@ def remove_extra(row):
 hero_network['hero1'] = hero_network['hero1'].apply(remove_extra)
 hero_network['hero2'] = hero_network['hero2'].apply(remove_extra)
 edges['hero'] = edges['hero'].apply(remove_extra)
+edges['comic'] = edges['comic'].apply(remove_extra)
 nodes['node'] = nodes['node'].apply(remove_extra)
 
 # Cut to max 20 characters hero's names.
