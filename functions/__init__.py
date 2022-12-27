@@ -1,1 +1,1 @@
-from .loader import load_graph_1, load_graph_2, top_N_filter
+from .loader import load_graph_1, load_graph_2, top_N_filter, clean_comm
