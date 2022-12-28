@@ -72,15 +72,3 @@ def top_N_filter(graph, N=-1):
     graph.remove_nodes_from(not_top_N_heroes(N))
     return graph
 
-# function that takes a command - i.e. a string - and returns the command in a clear and explicit form
-def clean_comm(string):
-    string = string.lower()
-    try:
-        # find the splitting point
-        find_capital = re.search(r'(centrality)', string)
-        index_capital = find_capital.start()
-        string = string[:index_capital].lower() + "_" + string[index_capital:].lower()
-    except AttributeError:
-        string = string.lower()
-        string = string if (string=="pagerank") else (string + "_centrality")
-    return(string)
