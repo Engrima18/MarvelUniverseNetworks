@@ -67,8 +67,10 @@ load_graph_1 = lambda: first_graph(hero_network)
 
 load_graph_2 = lambda: second_graph(nodes, edges)
 
-def top_N_filter(graph, N=-1):
+def top_N_filter(graph, N=-1, remove_isolates=True):
     graph = graph.copy()
     graph.remove_nodes_from(not_top_N_heroes(N))
+    if remove_isolates:
+        graph.remove_nodes_from(list(nx.isolates(graph)))
     return graph
 
