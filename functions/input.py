@@ -1,7 +1,7 @@
 import re
 
-# function that takes a command - i.e. a string - and returns the command in a clear and explicit form
 def clean_comm(string):
+    '''function that takes a command - i.e. a string - and returns the command in a clear and explicit form'''
     string = string.lower()
     try:
         # find the splitting point
