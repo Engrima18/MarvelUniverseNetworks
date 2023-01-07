@@ -31,16 +31,10 @@ hero_network.reset_index(drop=True, inplace=True)
 def first_graph(dataset):
     # Remake the dataframe sorting the names by row to check duplicates.
     dataset = pd.DataFrame(np.sort(dataset.values), columns=dataset.columns)
-
+    
     # Store the edges weights in a sorted dictionary.
-    edges_weight = dict(sorted(dict(round(1 / (dataset.hero1 + dataset.hero2).value_counts(), 5)).items()))
-
-    # Drop duplicates.
-    dataset.drop_duplicates(inplace=True)
-
-    # Create "weight" column.
-    dataset = dataset.sort_values(by=['hero1', 'hero2'])
-    dataset['weight'] = edges_weight.values()
+    dataset = dataset.value_counts().reset_index()
+    dataset['weight'] = 1 / dataset[0] 
 
     # Generate the graph.
     graph = nx.from_pandas_edgelist(dataset, 'hero1', 'hero2', 'weight')

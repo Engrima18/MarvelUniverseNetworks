@@ -18,7 +18,7 @@ def vis_4(graph, heroA, heroB, N=-1):
     fig, ax = plt.subplots(1, 2, figsize=(12,8))
     node_map1, edge_map1 = fit_colors(small_graph, heroA, heroB)
 
-    layout = nx.spring_layout(graph)
+    layout = nx.random_layout(graph)
     nx.draw_networkx(small_graph, layout, with_labels=False,  node_color=node_map1, edge_color= edge_map1, ax=ax[0])
 
     # set the title
