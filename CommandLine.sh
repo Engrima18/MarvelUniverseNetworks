@@ -1,32 +1,27 @@
-#!/bin/sh
-
+#!/bin/bash
 
 # 1.What is the most popular pair of heroes (often appearing together in the comics)?
-first=$(cat hero-network.csv | sort | uniq -c | sort -n | tail -1)
+first=$(cat dataset/archive/hero-network.csv | sort | uniq -c | grep -P '\d+ "(.*)","(?!\1)' | sort -n | tail -1)
 read -r n heroes <<< $first
 heroes=${heroes/,/ and }
 echo Most popular pair of heroes are $heroes appearing together $n times!
-echo
-
+echo 
 
 
 # 2.Number of comics per hero.
-awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $1}' edges.csv | sort | uniq -c | sort -nr | head -10
+echo Top 10 number of comics per superhero
+awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $1}' dataset/archive/edges.csv | sort | uniq -c | sort -nr | head -10
 echo
-
 # COMMENT: we display only the first top ten. To have the all list just need to remove head or set a number of top heroes.
 
 
-
 # 3.The average number of heroes in comics.
-third=$(awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $2}' edges.csv | sort | uniq -c | awk '{ tot += $1; nj++ } END { print tot/nj }')
+third=$(awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print $2}' dataset/archive/edges.csv | sort | uniq -c | awk '{ tot += $1; nj++ } END { print tot/nj }')
 echo The average number of heroes in comics is $third!
-
-
 
 ### RESULTS
 
-# Most popular pair of heroes are "PATRIOT/JEFF MACE" and "PATRIOT/JEFF MACE" appearing together 1275 times!
+# Most popular pair of heroes are "PATRIOT/JEFF MACE" and "MISS AMERICA/MADELIN" appearing together 1267 times!
 
 #    1577 SPIDER-MAN/PETER PARKER
 #    1334 CAPTAIN AMERICA
